@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloud Welcome Animation</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #000;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .cloud {
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            background: url('cloud.png'); /* Replace with your cloud SVG or image URL */
+            background-size: cover;
+            background-repeat: no-repeat;
+            opacity: 0;
+            transform: scale(0);
+            animation: cloudAnimation 1s ease-out forwards; /* Reduced duration */
+        }
+
+        @keyframes cloudAnimation {
+            0% {
+                transform: scale(0.1);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .popup {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background: rgba(0, 0, 0, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* Reduced box shadow */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            opacity: 0;
+            animation: popupAnimation 0.8s ease-out forwards; /* Reduced duration */
+            animation-delay: 0.3s; /* Reduced delay */
+        }
+
+        .popup a {
+            text-decoration: none;
+            color: #0f0;
+            font-size: 1.2rem;
+            background: rgba(0, 255, 0, 0.2);
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background 0.3s ease; /* Simplified transition */
+        }
+
+        .popup a:hover {
+            background: rgba(0, 255, 0, 0.5);
+        }
+
+        @keyframes popupAnimation {
+            0% {
+                transform: translate(-50%, -50%) scale(0.1);
+                opacity: 0;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="cloud"></div>
+    
+    <div class="popup" style="display: none;">
+        <a href="#">Play Game</a>
+        <a href="#">Settings</a>
+        <a href="#">Exit</a>
+    </div>
+
+    <audio id="cloudSound" src="cloud-sound.mp3"></audio>
+    <audio id="popupSound" src="popup-sound.mp3"></audio>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const cloud = document.querySelector('.cloud');
+            const popup = document.querySelector('.popup');
+            const cloudSound = document.getElementById('cloudSound');
+            const popupSound = document.getElementById('popupSound');
+
+            // Start cloud animation and play sound
+            cloud.addEventListener('animationend', () => {
+                cloudSound.play();
+
+                // Show popup after cloud sound
+                setTimeout(() => {
+                    popup.style.display = 'flex';
+                    popupSound.play();
+                }, 500); // Reduced delay
+            });
+        });
+    </script>
+</body>
+</html>
